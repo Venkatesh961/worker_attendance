@@ -1,74 +1,111 @@
-import { Image, StyleSheet, Platform } from 'react-native';
-
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
+import { useRouter } from 'expo-router';
+import { StyleSheet, Pressable } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { MaterialIcons } from '@expo/vector-icons';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 
 export default function HomeScreen() {
+  const router = useRouter();
+
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
+    <SafeAreaView style={styles.safeArea}>
+      <ThemedView style={styles.container}>
+        <ThemedText type="title" style={styles.title}>MarkAttend</ThemedText>
+        <ThemedView style={styles.gridContainer}>
+          <Pressable 
+            style={styles.card}
+            onPress={() => router.push('/mark-attendance')}>
+            <MaterialIcons name="how-to-reg" size={48} color="#0a7ea4" />
+            <ThemedText style={styles.cardTitle}>Mark Attendance</ThemedText>
+            <ThemedText style={styles.cardSubtitle}>Record daily worker attendance</ThemedText>
+          </Pressable>
+
+          <Pressable 
+            style={styles.card}
+            onPress={() => router.push('/manage-workers')}>
+            <MaterialIcons name="group-add" size={48} color="#0a7ea4" />
+            <ThemedText style={styles.cardTitle}>Manage Workers</ThemedText>
+            <ThemedText style={styles.cardSubtitle}>Add or edit workers</ThemedText>
+          </Pressable>
+
+          <Pressable 
+            style={styles.card}
+            onPress={() => router.push('/manage-advance')}>
+            <MaterialIcons name="payments" size={48} color="#0a7ea4" />
+            <ThemedText style={styles.cardTitle}>Manage Advance</ThemedText>
+            <ThemedText style={styles.cardSubtitle}>Record worker advances</ThemedText>
+          </Pressable>
+
+          <Pressable 
+            style={styles.card}
+            onPress={() => router.push('/work-folders')}>
+            <MaterialIcons name="folder-special" size={48} color="#0a7ea4" />
+            <ThemedText style={styles.cardTitle}>Work Folders</ThemedText>
+            <ThemedText style={styles.cardSubtitle}>Organize attendance by work</ThemedText>
+          </Pressable>
+
+          <Pressable 
+            style={styles.card}
+            onPress={() => router.push('/payment-settings')}>
+            <MaterialIcons name="attach-money" size={48} color="#0a7ea4" />
+            <ThemedText style={styles.cardTitle}>Payment Settings</ThemedText>
+            <ThemedText style={styles.cardSubtitle}>Configure payment rates</ThemedText>
+          </Pressable>
+        </ThemedView>
       </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12'
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          Tap the Explore tab to learn more about what's included in this starter app.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          When you're ready, run{' '}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
+  safeArea: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
+  container: {
+    flex: 1,
+    padding: 20,
+  },
+  title: {
+    fontSize: 32,
+    marginBottom: 24,
+    textAlign: 'center', // this centers the text horizontally
+  },
+  
+  gridContainer: {
     flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 20,
+    justifyContent: 'center', // Center cards when wrapping
+  },
+  card: {
+    width: 160,
+    height: 160,
+    backgroundColor: '#fff',
+    borderRadius: 16,
+    padding: 20,
+    justifyContent: 'center',
     alignItems: 'center',
-    gap: 8,
+    elevation: 4,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 3.84,
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
+  cardTitle: {
+    fontSize: 16,
+    fontWeight: '600',
+    marginTop: 12,
+    textAlign: 'center',
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+  cardSubtitle: {
+    fontSize: 12,
+    color: '#687076',
+    marginTop: 4,
+    textAlign: 'center',
   },
 });
